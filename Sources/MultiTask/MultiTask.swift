@@ -41,11 +41,12 @@ public struct MultiTask<Input, Output> {
             let action = try await progressHandle(snapshot)
             if case .cancel = action {
                 break
-            } else if case .nextWithDuration(let duration) = action {
+            } else if case .nextWithInterval(let timeInterval) = action {
                 let end = Date.now
-                let sleepTime = duration - Duration.seconds(end.timeIntervalSince1970-start.timeIntervalSince1970)
-                if sleepTime > Duration.seconds(0) {
-                    try await Task.sleep(for: sleepTime)
+                let sleepTime = timeInterval - (end.timeIntervalSince1970-start.timeIntervalSince1970)
+                if sleepTime > 0 {
+                    let nanoseconds: UInt64 = UInt64(sleepTime * TimeInterval(NSEC_PER_SEC))
+                    try await Task.sleep(nanoseconds: nanoseconds)
                 }
             }
         }
@@ -84,11 +85,12 @@ public struct MultiTask<Input, Output> {
             let action = try await progressHandle(snapshot)
             if case .cancel = action {
                 break
-            } else if case .nextWithDuration(let duration) = action {
+            } else if case .nextWithInterval(let timeInterval) = action {
                 let end = Date.now
-                let sleepTime = duration - Duration.seconds(end.timeIntervalSince1970-start.timeIntervalSince1970)
-                if sleepTime > Duration.seconds(0) {
-                    try await Task.sleep(for: sleepTime)
+                let sleepTime = timeInterval - (end.timeIntervalSince1970-start.timeIntervalSince1970)
+                if sleepTime > 0 {
+                    let nanoseconds: UInt64 = UInt64(sleepTime * TimeInterval(NSEC_PER_SEC))
+                    try await Task.sleep(nanoseconds: nanoseconds)
                 }
             }
         }

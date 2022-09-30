@@ -11,10 +11,6 @@ import Foundation
 public enum MultiTaskSnapshotAction: Equatable {
     
     case next
-    case nextWithDuration(Duration)
+    case nextWithInterval(TimeInterval)
     case cancel
-    
-    public static func nextWithInterval(_ timeInterval: TimeInterval) -> MultiTaskSnapshotAction {
-        .nextWithDuration(.seconds(timeInterval))
-    }
 }
