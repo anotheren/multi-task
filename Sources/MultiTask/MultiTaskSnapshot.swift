@@ -10,7 +10,7 @@ import Foundation
 
 public struct MultiTaskSnapshot<Output> {
     
-    let update: [Output]
-    let offset: Int
-    let total: Int
+    public let update: [Output]
+    public let offset: Int
+    public let total: Int
 }
