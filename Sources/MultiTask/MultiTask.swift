@@ -15,7 +15,7 @@ public struct MultiTask<Input, Output> {
         inputs: [Input],
         step: Int = 16,
         childTask: @escaping (Input) async throws -> Output,
-        progressHandle: @escaping (MultiTaskSnapshot<Output>) async throws -> MultiTaskSnapshotAction = { _ in return .next }
+        progressHandle: @escaping (Snapshot<Output>) async throws -> SnapshotAction = { _ in return .next }
     ) async throws -> [Output] {
         var finalResults: [Output] = []
         let total = inputs.count
@@ -37,7 +37,7 @@ public struct MultiTask<Input, Output> {
             finalResults.append(contentsOf: progressResults)
             
             let offset = index+step-1 < total ? index+step-1 : total - 1
-            let snapshot = MultiTaskSnapshot<Output>(update: progressResults, offset: offset, total: total)
+            let snapshot = Snapshot<Output>(update: progressResults, offset: offset, total: total)
             let action = try await progressHandle(snapshot)
             if case .cancel = action {
                 break
@@ -59,7 +59,7 @@ public struct MultiTask<Input, Output> {
         inputs: [Input],
         step: Int = 16,
         childTask: @escaping (Input) async throws -> Array<Output>,
-        progressHandle: @escaping (MultiTaskSnapshot<Output>) async throws -> MultiTaskSnapshotAction = { _ in return .next }
+        progressHandle: @escaping (Snapshot<Output>) async throws -> SnapshotAction = { _ in return .next }
     ) async throws -> [Output] {
         var finalResults: [Output] = []
         let total = inputs.count
@@ -81,7 +81,7 @@ public struct MultiTask<Input, Output> {
             finalResults.append(contentsOf: progressResults)
             
             let offset = index+step-1 < total ? index+step-1 : total - 1
-            let snapshot = MultiTaskSnapshot<Output>(update: progressResults, offset: offset, total: total)
+            let snapshot = Snapshot<Output>(update: progressResults, offset: offset, total: total)
             let action = try await progressHandle(snapshot)
             if case .cancel = action {
                 break

@@ -1,5 +1,5 @@
 //
-//  MultiTaskSnapshotAction.swift
+//  SnapshotAction.swift
 //  MultiTask
 //
 //  Created by 刘栋 on 2022/9/23.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum MultiTaskSnapshotAction: Equatable {
+public enum SnapshotAction: Equatable {
     
     case next
     case nextWithInterval(TimeInterval)
