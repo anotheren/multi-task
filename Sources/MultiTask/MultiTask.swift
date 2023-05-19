@@ -20,7 +20,6 @@ public struct MultiTask<Input, Output> {
         var finalResults: [Output] = []
         let total = inputs.count
         for index in stride(from: 0, to: total, by: step) {
-            let start = Date.now
             let progressResults = try await withThrowingTaskGroup(of: Output.self, body: { taskGroup in
                 for idx in index..<index+step where idx < total {
                     taskGroup.addTask {
@@ -41,13 +40,6 @@ public struct MultiTask<Input, Output> {
             let action = try await progressHandle(snapshot)
             if case .cancel = action {
                 break
-            } else if case .nextWithInterval(let timeInterval) = action {
-                let end = Date.now
-                let sleepTime = timeInterval - (end.timeIntervalSince1970-start.timeIntervalSince1970)
-                if sleepTime > 0 {
-                    let nanoseconds: UInt64 = UInt64(sleepTime * TimeInterval(NSEC_PER_SEC))
-                    try await Task.sleep(nanoseconds: nanoseconds)
-                }
             }
         }
         
@@ -64,7 +56,6 @@ public struct MultiTask<Input, Output> {
         var finalResults: [Output] = []
         let total = inputs.count
         for index in stride(from: 0, to: total, by: step) {
-            let start = Date.now
             let progressResults = try await withThrowingTaskGroup(of: Array<Output>.self, body: { taskGroup in
                 for idx in index..<index+step where idx < total {
                     taskGroup.addTask {
@@ -85,13 +76,6 @@ public struct MultiTask<Input, Output> {
             let action = try await progressHandle(snapshot)
             if case .cancel = action {
                 break
-            } else if case .nextWithInterval(let timeInterval) = action {
-                let end = Date.now
-                let sleepTime = timeInterval - (end.timeIntervalSince1970-start.timeIntervalSince1970)
-                if sleepTime > 0 {
-                    let nanoseconds: UInt64 = UInt64(sleepTime * TimeInterval(NSEC_PER_SEC))
-                    try await Task.sleep(nanoseconds: nanoseconds)
-                }
             }
         }
         

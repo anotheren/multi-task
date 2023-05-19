@@ -11,6 +11,5 @@ import Foundation
 public enum SnapshotAction: Equatable {
     
     case next
-    case nextWithInterval(TimeInterval)
     case cancel
 }
