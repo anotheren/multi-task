@@ -13,6 +13,7 @@ public struct MultiTask {
     @discardableResult
     public static func withThrowingTask<Input, Output>(
         inputs: [Input],
+        output: Output.Type = Output.self,
         step: Int = 16,
         childTask: @escaping (Input) async throws -> Output,
         progressHandle: @escaping (Snapshot<Output>) async throws -> SnapshotAction = { _ in return .next }
@@ -49,6 +50,7 @@ public struct MultiTask {
     @discardableResult
     public static func withThrowingArrayTask<Input, Output>(
         inputs: [Input],
+        output: Output.Type = Output.self,
         step: Int = 16,
         childTask: @escaping (Input) async throws -> Array<Output>,
         progressHandle: @escaping (Snapshot<Output>) async throws -> SnapshotAction = { _ in return .next }
