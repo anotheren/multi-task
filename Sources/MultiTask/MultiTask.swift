@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct MultiTask<Input, Output> {
+public struct MultiTask {
     
     @discardableResult
     public static func withThrowingTask<Input, Output>(
