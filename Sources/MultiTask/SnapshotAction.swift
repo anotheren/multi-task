@@ -13,3 +13,24 @@ public enum SnapshotAction: Equatable {
     case next
     case cancel
 }
+
+extension SnapshotAction {
+    
+    public var isNext: Bool {
+        switch self {
+        case .next:
+            return true
+        case .cancel:
+            return false
+        }
+    }
+    
+    public var isCancel: Bool {
+        switch self {
+        case .next:
+            return false
+        case .cancel:
+            return true
+        }
+    }
+}
