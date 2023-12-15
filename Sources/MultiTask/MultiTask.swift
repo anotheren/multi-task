@@ -39,7 +39,7 @@ public struct MultiTask {
             let offset = index+step-1 < total ? index+step-1 : total - 1
             let snapshot = Snapshot<Output>(update: progressResults, offset: offset, total: total)
             let action = try await progressHandle(snapshot)
-            if case .cancel = action {
+            if action.isCancelled {
                 break
             }
         }
@@ -76,7 +76,7 @@ public struct MultiTask {
             let offset = index+step-1 < total ? index+step-1 : total - 1
             let snapshot = Snapshot<Output>(update: progressResults, offset: offset, total: total)
             let action = try await progressHandle(snapshot)
-            if case .cancel = action {
+            if action.isCancelled {
                 break
             }
         }

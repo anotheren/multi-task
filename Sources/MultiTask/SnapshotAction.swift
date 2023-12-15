@@ -11,7 +11,7 @@ import Foundation
 public enum SnapshotAction: Equatable {
     
     case next
-    case cancel
+    case cancelled
 }
 
 extension SnapshotAction {
@@ -20,16 +20,16 @@ extension SnapshotAction {
         switch self {
         case .next:
             return true
-        case .cancel:
+        case .cancelled:
             return false
         }
     }
     
-    public var isCancel: Bool {
+    public var isCancelled: Bool {
         switch self {
         case .next:
             return false
-        case .cancel:
+        case .cancelled:
             return true
         }
     }
