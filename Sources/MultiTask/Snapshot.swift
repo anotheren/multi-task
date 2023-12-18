@@ -13,4 +13,10 @@ public struct Snapshot<Output> {
     public let update: [Output]
     public let offset: Int
     public let total: Int
+    
+    public init(update: [Output], offset: Int, total: Int) {
+        self.update = update
+        self.offset = offset
+        self.total = total
+    }
 }
