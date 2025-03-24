@@ -11,13 +11,13 @@ import Foundation
 public struct MultiTask {
     
     @discardableResult
-    public static func withThrowingTask<Input, Output>(
-        inputs: [Input],
+    public static func withThrowingTask<Input, Output, Inputs: Collection>(
+        inputs: Inputs,
         output: Output.Type = Output.self,
         step: Int = 16,
         childTask: @escaping (Input) async throws -> Output,
         progressHandle: @escaping (Snapshot<Output>) async throws -> SnapshotAction = { _ in return .next }
-    ) async throws -> [Output] {
+    ) async throws -> [Output] where Inputs.Element == Input, Inputs.Index == Int {
         var finalResults: [Output] = []
         let total = inputs.count
         for index in stride(from: 0, to: total, by: step) {
@@ -48,13 +48,13 @@ public struct MultiTask {
     }
     
     @discardableResult
-    public static func withThrowingArrayTask<Input, Output>(
-        inputs: [Input],
+    public static func withThrowingArrayTask<Input, Output, Inputs: Collection>(
+        inputs: Inputs,
         output: Output.Type = Output.self,
         step: Int = 16,
         childTask: @escaping (Input) async throws -> Array<Output>,
         progressHandle: @escaping (Snapshot<Output>) async throws -> SnapshotAction = { _ in return .next }
-    ) async throws -> [Output] {
+    ) async throws -> [Output] where Inputs.Element == Input, Inputs.Index == Int {
         var finalResults: [Output] = []
         let total = inputs.count
         for index in stride(from: 0, to: total, by: step) {
